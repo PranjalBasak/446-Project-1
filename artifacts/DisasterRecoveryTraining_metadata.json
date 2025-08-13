@@ -1,0 +1,311 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "trainerId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "participantId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "slotId",
+						"type": "uint256"
+					}
+				],
+				"name": "bookTrainingSlot",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "age",
+						"type": "uint256"
+					}
+				],
+				"name": "registerAdmin",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "age",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "gender",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "district",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "training_interest",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "has_completed_training",
+						"type": "bool"
+					}
+				],
+				"name": "registerParticipant",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "age",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "gender",
+						"type": "string"
+					}
+				],
+				"name": "registerTrainer",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "participantId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "newTrainingInterest",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "has_completed_training",
+						"type": "bool"
+					}
+				],
+				"name": "updateParticipantData",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "viewAdminBalance",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "adminIdList",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "balanceList",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "participantId",
+						"type": "uint256"
+					}
+				],
+				"name": "viewParticipantData",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "age",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "gender",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "district",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "training_interest",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "has_completed_training",
+						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "balance",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "trainerId",
+						"type": "uint256"
+					}
+				],
+				"name": "viewTrainerSchedule",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "availableSlots",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "timeRanges",
+						"type": "string[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/DisasterRecoveryTraining.sol": "DisasterRecoveryTraining"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/DisasterRecoveryTraining.sol": {
+			"keccak256": "0x086a0c8ec65b16a943908bfe209be11a50c3f6b8919d693053da9afcee6da8d6",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://fd25c6ac4203b79cd9111b9967fa8e46fc397fc66cbe13e19fc7467c2c060fa4",
+				"dweb:/ipfs/QmcDXZ4AKyNYyG2hMoJdo25CDGbvLAccth3JbyMmVUrH9W"
+			]
+		}
+	},
+	"version": 1
+}
