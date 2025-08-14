@@ -7,6 +7,7 @@ contract DisasterRecoveryTraining {
         string name;
         uint256 age;
         uint256 balance;
+        address account;
     }
     
     struct Trainer {
@@ -14,6 +15,7 @@ contract DisasterRecoveryTraining {
         string name;
         uint256 age;
         string gender;
+        address account;
     }
     
     struct Participant {
@@ -25,6 +27,7 @@ contract DisasterRecoveryTraining {
         TrainingType training_interest;
         bool has_completed_training;
         uint256 balance;
+        address account;
     }
     
     struct TrainingSlot {
@@ -41,6 +44,21 @@ contract DisasterRecoveryTraining {
     mapping(uint256 => Participant) private participants;
     mapping(uint256 => mapping(uint256 => TrainingSlot)) private trainerSlots; // trainerId => slotId => TrainingSlot
     uint256[] private adminIds; // Array to store all admin IDs for random selection
+    mapping(address => uint256) private adminAddressToId;
+    mapping(address => uint256) private trainerAddressToId;
+    mapping(address => uint256) private participantAddressToId;
+    
+    modifier onlyAdmin() {
+        uint256 adminId = adminAddressToId[msg.sender];
+        require(adminId != 0 && admins[adminId].account == msg.sender, "Admin only");
+        _;
+    }
+    
+    modifier onlyParticipant(uint256 participantId) {
+        require(participants[participantId].id != 0, "Participant not found");
+        require(participants[participantId].account == msg.sender, "Participant only");
+        _;
+    }
     
     constructor() {
     }
@@ -49,9 +67,11 @@ contract DisasterRecoveryTraining {
         require(age > 0, "Invalid age");
         require(id > 0, "Invalid ID");
         require(admins[id].id == 0, "Admin ID already exists");
+        require(adminAddressToId[msg.sender] == 0, "Address already registered as admin");
         
-        admins[id] = Admin(id, name, age, 0);
+        admins[id] = Admin(id, name, age, 0, msg.sender);
         adminIds.push(id);
+        adminAddressToId[msg.sender] = id;
         return id;
     }
     
@@ -59,8 +79,10 @@ contract DisasterRecoveryTraining {
         require(age > 0, "Invalid age");
         require(id > 0, "Invalid ID");
         require(trainers[id].id == 0, "Trainer ID already exists");
+        require(trainerAddressToId[msg.sender] == 0, "Address already registered as trainer");
         
-        trainers[id] = Trainer(id, name, age, gender);
+        trainers[id] = Trainer(id, name, age, gender, msg.sender);
+        trainerAddressToId[msg.sender] = id;
         return id;
     }
     
@@ -77,6 +99,7 @@ contract DisasterRecoveryTraining {
         require(id > 0, "Invalid ID");
         require(participants[id].id == 0, "Participant ID already exists");
         require(training_interest <= 2, "Invalid training interest");
+        require(participantAddressToId[msg.sender] == 0, "Address already registered as participant");
         
         participants[id] = Participant(
             id,
@@ -86,12 +109,14 @@ contract DisasterRecoveryTraining {
             district,
             TrainingType(training_interest),
             has_completed_training,
-            INITIAL_PARTICIPANT_BALANCE
+            INITIAL_PARTICIPANT_BALANCE,
+            msg.sender
         );
+        participantAddressToId[msg.sender] = id;
         return id;
     }
     
-    function updateParticipantData(uint256 participantId, uint256 newTrainingInterest, bool has_completed_training) external {
+    function updateParticipantData(uint256 participantId, uint256 newTrainingInterest, bool has_completed_training) external onlyAdmin {
         require(participants[participantId].id != 0, "Participant not found");
         require(newTrainingInterest <= 2, "Invalid training interest");
         
@@ -102,7 +127,7 @@ contract DisasterRecoveryTraining {
         p.has_completed_training = has_completed_training;
     }
     
-    function bookTrainingSlot(uint256 trainerId, uint256 participantId, uint256 slotId) external returns (bool) {
+    function bookTrainingSlot(uint256 trainerId, uint256 participantId, uint256 slotId) external onlyParticipant(participantId) returns (bool) {
         require(trainers[trainerId].id != 0, "Trainer not found");
         require(participants[participantId].id != 0, "Participant not found");
         require(participants[participantId].balance >= BOOKING_FEE, "Insufficient participant balance");
